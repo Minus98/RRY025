@@ -50,6 +50,30 @@ figure;
 plot(target_hist)
 
 cum_target_hist = cumsum(target_hist);
+test = cumsum(flip(target_hist));
+
+
+figure;
+plot(cum_hist);
+figure;
+plot(cum_target_hist);
+figure;
+
+transformation = zeros(256,1);
+
+for level = 1:256
+    [M,I] = min(abs(cum_target_hist-cum_hist(level)));
+    transformation(level) = I;
+end
+plot(transformation);
+
+
+eqpout = transformation(data.quarter+1);
+
+figure; 
+imhist(uint8(eqpout))
+figure;
+imshow(eqpout,[])
 
 function p = new_pdf(value, coinrang, lower_size, upper_size)
     if value <= coinrang
